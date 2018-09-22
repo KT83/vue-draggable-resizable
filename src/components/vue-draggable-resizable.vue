@@ -130,6 +130,9 @@ export default {
     },
     maximize: {
       type: Boolean, default: false
+    },
+    scale: {
+      type: Number, default: 1.0
     }
   },
 
@@ -354,6 +357,9 @@ export default {
       this.lastMouseX = this.mouseX
       this.lastMouseY = this.mouseY
 
+      diffX = diffX * (1.0 / this.scale)
+      diffY = diffY * (1.0 / this.scale)
+
       let dX = diffX
       let dY = diffY
 
@@ -458,74 +464,77 @@ export default {
 }
 </script>
 
-<style scoped>
-  .vdr {
-    position: absolute;
-    box-sizing: border-box;
-  }
-  .handle {
-    box-sizing: border-box;
-    display: none;
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    font-size: 1px;
-    background: #EEE;
-    border: 1px solid #333;
-  }
-  .handle-tl {
-    top: -10px;
-    left: -10px;
-    cursor: nw-resize;
-  }
-  .handle-tm {
-    top: -10px;
-    left: 50%;
-    margin-left: -5px;
-    cursor: n-resize;
-  }
-  .handle-tr {
-    top: -10px;
-    right: -10px;
-    cursor: ne-resize;
-  }
-  .handle-ml {
-    top: 50%;
-    margin-top: -5px;
-    left: -10px;
-    cursor: w-resize;
-  }
-  .handle-mr {
-    top: 50%;
-    margin-top: -5px;
-    right: -10px;
-    cursor: e-resize;
-  }
-  .handle-bl {
-    bottom: -10px;
-    left: -10px;
-    cursor: sw-resize;
-  }
-  .handle-bm {
-    bottom: -10px;
-    left: 50%;
-    margin-left: -5px;
-    cursor: s-resize;
-  }
-  .handle-br {
-    bottom: -10px;
-    right: -10px;
-    cursor: se-resize;
-  }
-  @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
-    [class*="handle-"]:before {
-      content: '';
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
-      top: -10px;
-      position: absolute;
-    }
-  }
+<style lang="stylus" scoped>
+$handle-size = 12px
+$handle-size-n = - $handle-size
+$handle-size-half = $handle-size / 2.0
+$handle-size-half-n = - $handle-size-half
+
+.vdr
+    position absolute
+    box-sizing border-box
+
+.handle
+    box-sizing border-box
+    display none
+    position absolute
+    width $handle-size
+    height $handle-size
+    border-radius $handle-size-half
+    font-size 1px
+    background #fff
+    border 2px solid #32eccd
+
+.handle-tl
+    top $handle-size-half-n
+    left $handle-size-half-n
+    cursor nw-resize
+
+.handle-tm
+    top $handle-size-half-n
+    left 50%
+    margin-left $handle-size-half-n
+    cursor n-resize
+
+.handle-tr
+    top $handle-size-half-n
+    right $handle-size-half-n
+    cursor ne-resize
+
+.handle-ml
+    top 50%
+    margin-top $handle-size-half-n
+    left $handle-size-half-n
+    cursor w-resize
+
+.handle-mr
+    top 50%
+    margin-top $handle-size-half-n
+    right $handle-size-half-n
+    cursor e-resize
+
+.handle-bl
+    bottom $handle-size-half-n
+    left $handle-size-half-n
+    cursor sw-resize
+
+.handle-bm
+    bottom $handle-size-half-n
+    left 50%
+    margin-left $handle-size-half-n
+    cursor s-resize
+
+.handle-br
+    bottom $handle-size-half-n
+    right $handle-size-half-n
+    cursor se-resize
+
+@media only screen and (max-width: 768px)
+    [class*="handle-"]:before
+        content ''
+        left $handle-size-half-n
+        right $handle-size-half-n
+        bottom $handle-size-half-n
+        top $handle-size-half-n
+        position absolute
 </style>
